@@ -1,17 +1,22 @@
 PODS:
   - Alamofire (4.2.0)
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
 
 DEPENDENCIES:
-  - Alamofire
-  - SDWebImage
+  - Alamofire (= 4.2.0)
+  - FMDB
+  - SDWebImage (= 3.8.2)
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
 
-PODFILE CHECKSUM: 0f2948361dbfab1641a9e2199745f91cf0ee7c0c
+PODFILE CHECKSUM: 79dcc96cde5490b53b4e0d38315059e1838f2d95
 
 COCOAPODS: 1.0.1

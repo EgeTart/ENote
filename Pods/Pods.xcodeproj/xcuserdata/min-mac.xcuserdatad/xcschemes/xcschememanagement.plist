@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FMDB.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-ENote.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0E4C3E017AA0880CCC5A2268DF906859</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4B92653C859467359E2406452100C815</key>
+		<key>23CF27B2BA6AC7125EFFEDA8C5AA819F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D9C2B3409FC62A5F40677EA6F23BC196</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F403431882B75E01680EB15C49345CBE</key>
 		<dict>
 			<key>primary</key>
 			<true/>

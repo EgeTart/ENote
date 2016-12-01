@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		94A3426B6FBD944B6902B6EE /* Pods_ENote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 210912EB8A81C669E7E02B8B /* Pods_ENote.framework */; };
+		F688570A1DEFC5C000B100EF /* NoteInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68857091DEFC5C000B100EF /* NoteInputView.swift */; };
+		F68857101DEFC65C00B100EF /* NoteInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F688570F1DEFC65C00B100EF /* NoteInputView.xib */; };
 		F691C1321DEC560300EAFEE8 /* Sentence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F691C1311DEC560300EAFEE8 /* Sentence.swift */; };
 		F6C0A3971DEC4A7B0087B2BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C0A3961DEC4A7B0087B2BA /* AppDelegate.swift */; };
-		F6C0A3991DEC4A7B0087B2BA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C0A3981DEC4A7B0087B2BA /* ViewController.swift */; };
+		F6C0A3991DEC4A7B0087B2BA /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C0A3981DEC4A7B0087B2BA /* NotesViewController.swift */; };
 		F6C0A39C1DEC4A7B0087B2BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6C0A39A1DEC4A7B0087B2BA /* Main.storyboard */; };
 		F6C0A39E1DEC4A7B0087B2BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6C0A39D1DEC4A7B0087B2BA /* Assets.xcassets */; };
 		F6C0A3A11DEC4A7B0087B2BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6C0A39F1DEC4A7B0087B2BA /* LaunchScreen.storyboard */; };
@@ -20,10 +22,12 @@
 		210912EB8A81C669E7E02B8B /* Pods_ENote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ENote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FDA4C6D70CCBB8780D5EAAA /* Pods-ENote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ENote.release.xcconfig"; path = "Pods/Target Support Files/Pods-ENote/Pods-ENote.release.xcconfig"; sourceTree = "<group>"; };
 		C7C5C9D2289C955706E4968A /* Pods-ENote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ENote.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ENote/Pods-ENote.debug.xcconfig"; sourceTree = "<group>"; };
+		F68857091DEFC5C000B100EF /* NoteInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteInputView.swift; sourceTree = "<group>"; };
+		F688570F1DEFC65C00B100EF /* NoteInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteInputView.xib; sourceTree = "<group>"; };
 		F691C1311DEC560300EAFEE8 /* Sentence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sentence.swift; sourceTree = "<group>"; };
 		F6C0A3931DEC4A7B0087B2BA /* ENote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ENote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6C0A3961DEC4A7B0087B2BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F6C0A3981DEC4A7B0087B2BA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F6C0A3981DEC4A7B0087B2BA /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		F6C0A39B1DEC4A7B0087B2BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F6C0A39D1DEC4A7B0087B2BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F6C0A3A01DEC4A7B0087B2BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -59,6 +63,50 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		F68857081DEFC57B00B100EF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F68857091DEFC5C000B100EF /* NoteInputView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		F688570B1DEFC5C700B100EF /* Storyboard & Xib */ = {
+			isa = PBXGroup;
+			children = (
+				F6C0A39A1DEC4A7B0087B2BA /* Main.storyboard */,
+				F6C0A39F1DEC4A7B0087B2BA /* LaunchScreen.storyboard */,
+				F688570F1DEFC65C00B100EF /* NoteInputView.xib */,
+			);
+			name = "Storyboard & Xib";
+			sourceTree = "<group>";
+		};
+		F688570C1DEFC5E700B100EF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F691C1311DEC560300EAFEE8 /* Sentence.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		F688570D1DEFC5F500B100EF /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				F6C0A39D1DEC4A7B0087B2BA /* Assets.xcassets */,
+				F6C0A3A21DEC4A7B0087B2BA /* Info.plist */,
+				F6C0A3961DEC4A7B0087B2BA /* AppDelegate.swift */,
+			);
+			name = Others;
+			sourceTree = "<group>";
+		};
+		F688570E1DEFC61B00B100EF /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F6C0A3981DEC4A7B0087B2BA /* NotesViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		F6C0A38A1DEC4A7B0087B2BA = {
 			isa = PBXGroup;
 			children = (
@@ -80,13 +128,11 @@
 		F6C0A3951DEC4A7B0087B2BA /* ENote */ = {
 			isa = PBXGroup;
 			children = (
-				F6C0A3961DEC4A7B0087B2BA /* AppDelegate.swift */,
-				F6C0A3981DEC4A7B0087B2BA /* ViewController.swift */,
-				F6C0A39A1DEC4A7B0087B2BA /* Main.storyboard */,
-				F6C0A39D1DEC4A7B0087B2BA /* Assets.xcassets */,
-				F6C0A39F1DEC4A7B0087B2BA /* LaunchScreen.storyboard */,
-				F6C0A3A21DEC4A7B0087B2BA /* Info.plist */,
-				F691C1311DEC560300EAFEE8 /* Sentence.swift */,
+				F688570C1DEFC5E700B100EF /* Models */,
+				F68857081DEFC57B00B100EF /* Views */,
+				F688570E1DEFC61B00B100EF /* Controllers */,
+				F688570B1DEFC5C700B100EF /* Storyboard & Xib */,
+				F688570D1DEFC5F500B100EF /* Others */,
 			);
 			path = ENote;
 			sourceTree = "<group>";
@@ -158,6 +204,7 @@
 				F6C0A3A11DEC4A7B0087B2BA /* LaunchScreen.storyboard in Resources */,
 				F6C0A39E1DEC4A7B0087B2BA /* Assets.xcassets in Resources */,
 				F6C0A39C1DEC4A7B0087B2BA /* Main.storyboard in Resources */,
+				F68857101DEFC65C00B100EF /* NoteInputView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,9 +263,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6C0A3991DEC4A7B0087B2BA /* ViewController.swift in Sources */,
+				F6C0A3991DEC4A7B0087B2BA /* NotesViewController.swift in Sources */,
 				F691C1321DEC560300EAFEE8 /* Sentence.swift in Sources */,
 				F6C0A3971DEC4A7B0087B2BA /* AppDelegate.swift in Sources */,
+				F688570A1DEFC5C000B100EF /* NoteInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
