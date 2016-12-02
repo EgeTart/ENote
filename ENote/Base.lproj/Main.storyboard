@@ -55,6 +55,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="9yX-aJ-TVz">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="6sc-0c-dwR">
+                            <color key="tintColor" red="0.62745098040000002" green="0.83921568629999999" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="addNote:" destination="BYZ-38-t0r" id="JsH-Aw-i8X"/>
                             </connections>

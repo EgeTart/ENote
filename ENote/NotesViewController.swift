@@ -22,14 +22,19 @@ class NotesViewController: UIViewController {
     
     var noteInputView: NoteInputView!
     
+    let databaseManager = DatabaseManager.sharedManager
+    let notesManager = NotesManager.sharedManager
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         notesTableView.dataSource = self
         notesTableView.delegate = self
+        notesTableView.tableFooterView = UIView()
  
         NotificationCenter.default.addObserver(self, selector: #selector(NotesViewController.keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(NotesViewController.keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
     }
     
     func currentDateInFormatte(formatte: String) -> String {
@@ -81,6 +86,10 @@ class NotesViewController: UIViewController {
     
     func finishedAddNoteHandler(note: String) {
         print(note)
+        
+        databaseManager.insertNote(content: note)
+        
+        notesTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
     }
     
     // MARK: - IBAction
@@ -96,18 +105,33 @@ class NotesViewController: UIViewController {
         self.view.bringSubview(toFront: noteInputView)
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        let note = notesManager.notes[indexPath.row]
+        
+        return !note.state
+    }
 }
 
 // MARK: - UITableViewDataSource
 extension NotesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 15
+        return notesManager.notes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let note = notesManager.notes[indexPath.row]
+        
         let noteCell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as UITableViewCell
-        noteCell.textLabel?.text = "Hello Swift"
+        noteCell.textLabel?.text = note.content
+    
+        if note.state {
+            noteCell.textLabel?.textColor = UIColor(red: 0.4, green: 0.6, blue: 0.9, alpha: 1.0)
+        }
+        else {
+            noteCell.textLabel?.textColor = UIColor.black
+        }
         
         return noteCell
     }
@@ -117,6 +141,45 @@ extension NotesViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension NotesViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let note = notesManager.notes[indexPath.row]
+        
+        if note.state {
+            return nil
+        }
+        
+        let updateStateAction = UITableViewRowAction(style: .normal, title: "完成", handler: {action, indexPath in
+            
+            let note = self.notesManager.notes[indexPath.row]
+            self.databaseManager.updateNoteState(id: note.id)
+
+            let newIndex = self.notesManager.notes.index(where: { (updatedNote: Note) -> Bool in
+                return updatedNote.id == note.id
+            })
+            
+            let newIndexPath = IndexPath(row: newIndex!, section: 0)
+            tableView.moveRow(at: indexPath, to: newIndexPath)
+            tableView.reloadRows(at: [newIndexPath], with: .automatic)
+            
+        })
+        updateStateAction.backgroundColor = UIColor(red: 0.4, green: 0.6, blue: 0.9, alpha: 1.0)
+        
+        
+        let deleteNoteAction = UITableViewRowAction(style: .default, title: "删除", handler: {action, indexPath in
+            
+            let note = self.notesManager.notes[indexPath.row]
+            self.databaseManager.deleteNote(id: note.id)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        })
+        
+        return [deleteNoteAction, updateStateAction]
+    }
 }
 
 
