@@ -1,5 +1,8 @@
 PODS:
   - Alamofire (4.2.0)
+  - Charts (3.0.1):
+    - Charts/Core (= 3.0.1)
+  - Charts/Core (3.0.1)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
@@ -9,14 +12,16 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (= 4.2.0)
+  - Charts
   - FMDB
   - SDWebImage (= 3.8.2)
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  Charts: 0e84f4418e87dad6a9edde221fba37ebb51d3ba7
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
 
-PODFILE CHECKSUM: 79dcc96cde5490b53b4e0d38315059e1838f2d95
+PODFILE CHECKSUM: 89c9aaa9247297bac15cb8cca948b391e49e097f
 
 COCOAPODS: 1.0.1

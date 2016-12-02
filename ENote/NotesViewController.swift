@@ -28,9 +28,16 @@ class NotesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        databaseManager.updateHistoryTable()
+        
         notesTableView.dataSource = self
         notesTableView.delegate = self
         notesTableView.tableFooterView = UIView()
+        
+        notesTableView.rowHeight = UITableViewAutomaticDimension
+        notesTableView.estimatedRowHeight = 50
+        
+        notesTableView.register(UINib(nibName: "NoteCell", bundle: Bundle.main), forCellReuseIdentifier: "NoteCell")
  
         NotificationCenter.default.addObserver(self, selector: #selector(NotesViewController.keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(NotesViewController.keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -123,14 +130,14 @@ extension NotesViewController: UITableViewDataSource {
         
         let note = notesManager.notes[indexPath.row]
         
-        let noteCell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as UITableViewCell
-        noteCell.textLabel?.text = note.content
+        let noteCell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as! NoteCell
+        noteCell.contentLable.text = note.content
     
         if note.state {
-            noteCell.textLabel?.textColor = UIColor(red: 0.4, green: 0.6, blue: 0.9, alpha: 1.0)
+            noteCell.contentLable.textColor = UIColor(red: 153.0 / 255.0, green: 153.0 / 255.0, blue: 153.0 / 255.0, alpha: 1.0)
         }
         else {
-            noteCell.textLabel?.textColor = UIColor.black
+            noteCell.contentLable.textColor = UIColor(red: 51.0 / 255.0, green: 51.0 / 255.0, blue: 51.0 / 255.0, alpha: 1.0)
         }
         
         return noteCell

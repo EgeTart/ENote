@@ -40,7 +40,7 @@ class DatabaseManager {
         let historyNotesTable = "CREATE TABLE IF NOT EXISTS history_notes(id INTEGER PRIMARY KEY AUTOINCREMENT, note_date DATE NOT NULL, content TEXT NOT NULL, state BOOLEAN NOT NULL)"
         let historyNotesTableState = database.executeStatements(historyNotesTable)
         
-        let todayNotesTable = "CREATE TABLE IF NOT EXISTS today_notes(id INTEGER PRIMARY KEY AUTOINCREMENT, note_date DATE NOT NULL DEFAULT (datetime('now', 'localtime')), content TEXT NOT NULL UNIQUE, state BOOLEAN NOT NULL DEFAULT false)"
+        let todayNotesTable = "CREATE TABLE IF NOT EXISTS today_notes(id INTEGER PRIMARY KEY AUTOINCREMENT, note_date DATE NOT NULL DEFAULT (datetime('now', 'localtime')), content TEXT NOT NULL UNIQUE, state BOOLEAN NOT NULL DEFAULT 0)"
         let todayNotesTableState = database.executeStatements(todayNotesTable)
         
         if historyNotesTableState && todayNotesTableState {
@@ -116,7 +116,7 @@ class DatabaseManager {
                     notes.append(note)
                 }
                 
-                print(note.date)
+                print(date!)
             }
             
             notes.append(contentsOf: finishedNotes)
@@ -127,5 +127,21 @@ class DatabaseManager {
         }
         
         return notes
+    }
+    
+    func updateHistoryTable() {
+        let updateHistoryNotesSql = "INSERT INTO history_notes (content, note_date, state) SELECT content, note_date, state FROM today_notes WHERE date(note_date) != date('now')"
+        
+        let deleteExpireNotesSql = "DELETE FROM today_notes WHERE date(note_date) != date('now')"
+        
+        do {
+            try database.executeUpdate(updateHistoryNotesSql, values: nil)
+            try database.executeUpdate(deleteExpireNotesSql, values: nil)
+        }
+        catch {
+            print(error)
+        }
+        
+        NotesManager.sharedManager.updateTodayNotes()
     }
 }
