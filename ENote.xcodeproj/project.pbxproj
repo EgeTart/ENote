@@ -14,6 +14,9 @@
 		F6BD40241DF01187005A69E3 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BD40231DF01187005A69E3 /* DatabaseManager.swift */; };
 		F6BD40261DF0362D005A69E3 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BD40251DF0362D005A69E3 /* Note.swift */; };
 		F6BD40281DF03644005A69E3 /* NotesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BD40271DF03644005A69E3 /* NotesManager.swift */; };
+		F6BF7C411DF18FA2005082FE /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BF7C401DF18FA2005082FE /* StatisticsViewController.swift */; };
+		F6BF7C441DF19C80005082FE /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BF7C431DF19C80005082FE /* Helper.swift */; };
+		F6BF7C461DF1A9BB005082FE /* DailyNotesStatistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BF7C451DF1A9BB005082FE /* DailyNotesStatistics.swift */; };
 		F6C0A3971DEC4A7B0087B2BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C0A3961DEC4A7B0087B2BA /* AppDelegate.swift */; };
 		F6C0A3991DEC4A7B0087B2BA /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C0A3981DEC4A7B0087B2BA /* NotesViewController.swift */; };
 		F6C0A39C1DEC4A7B0087B2BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6C0A39A1DEC4A7B0087B2BA /* Main.storyboard */; };
@@ -33,6 +36,9 @@
 		F6BD40231DF01187005A69E3 /* DatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		F6BD40251DF0362D005A69E3 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		F6BD40271DF03644005A69E3 /* NotesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesManager.swift; sourceTree = "<group>"; };
+		F6BF7C401DF18FA2005082FE /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
+		F6BF7C431DF19C80005082FE /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		F6BF7C451DF1A9BB005082FE /* DailyNotesStatistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyNotesStatistics.swift; sourceTree = "<group>"; };
 		F6C0A3931DEC4A7B0087B2BA /* ENote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ENote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6C0A3961DEC4A7B0087B2BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F6C0A3981DEC4A7B0087B2BA /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +106,7 @@
 				F6BD40231DF01187005A69E3 /* DatabaseManager.swift */,
 				F6BD40251DF0362D005A69E3 /* Note.swift */,
 				F6BD40271DF03644005A69E3 /* NotesManager.swift */,
+				F6BF7C451DF1A9BB005082FE /* DailyNotesStatistics.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -118,8 +125,17 @@
 			isa = PBXGroup;
 			children = (
 				F6C0A3981DEC4A7B0087B2BA /* NotesViewController.swift */,
+				F6BF7C401DF18FA2005082FE /* StatisticsViewController.swift */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		F6BF7C421DF19C4B005082FE /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				F6BF7C431DF19C80005082FE /* Helper.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		F6C0A38A1DEC4A7B0087B2BA = {
@@ -143,6 +159,7 @@
 		F6C0A3951DEC4A7B0087B2BA /* ENote */ = {
 			isa = PBXGroup;
 			children = (
+				F6BF7C421DF19C4B005082FE /* Helpers */,
 				F688570C1DEFC5E700B100EF /* Models */,
 				F68857081DEFC57B00B100EF /* Views */,
 				F688570E1DEFC61B00B100EF /* Controllers */,
@@ -283,8 +300,11 @@
 				F691C1321DEC560300EAFEE8 /* Sentence.swift in Sources */,
 				F6BD40241DF01187005A69E3 /* DatabaseManager.swift in Sources */,
 				F6BD40281DF03644005A69E3 /* NotesManager.swift in Sources */,
+				F6BF7C461DF1A9BB005082FE /* DailyNotesStatistics.swift in Sources */,
 				F6C0A3971DEC4A7B0087B2BA /* AppDelegate.swift in Sources */,
 				F688570A1DEFC5C000B100EF /* NoteInputView.swift in Sources */,
+				F6BF7C411DF18FA2005082FE /* StatisticsViewController.swift in Sources */,
+				F6BF7C441DF19C80005082FE /* Helper.swift in Sources */,
 				F6BD40261DF0362D005A69E3 /* Note.swift in Sources */,
 				F6FFDDCB1DF11FD200E5B733 /* NoteCell.swift in Sources */,
 			);

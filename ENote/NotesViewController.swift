@@ -16,6 +16,7 @@ class NotesViewController: UIViewController {
     @IBOutlet weak var sentenceImageView: UIImageView!
     @IBOutlet weak var sentenceLabel: UILabel!
     
+    @IBOutlet weak var addNoteItem: UIBarButtonItem!
     @IBOutlet weak var notesTableView: UITableView!
     
     var sentence: Sentence!
@@ -110,13 +111,14 @@ class NotesViewController: UIViewController {
         
         self.view.addSubview(noteInputView)
         self.view.bringSubview(toFront: noteInputView)
+        
+        addNoteItem.isEnabled = false
     }
     
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        let note = notesManager.notes[indexPath.row]
-        
-        return !note.state
+    @IBAction func showStatisticsController(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "ToStatistics", sender: self)
     }
+    
 }
 
 // MARK: - UITableViewDataSource
@@ -141,6 +143,12 @@ extension NotesViewController: UITableViewDataSource {
         }
         
         return noteCell
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        let note = notesManager.notes[indexPath.row]
+        
+        return !note.state
     }
 }
 
@@ -211,6 +219,8 @@ extension NotesViewController {
     
     func keyboardWillHide(notification: Notification) {
         let duration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey] as! TimeInterval
+        
+        addNoteItem.isEnabled = true
         
         UIView.animate(withDuration: duration, animations: {
             self.noteInputView.frame.origin = CGPoint(x: 0, y: self.view.frame.height)

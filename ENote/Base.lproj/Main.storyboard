@@ -35,20 +35,74 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="ENote便签" id="9yX-aJ-TVz">
+                        <barButtonItem key="leftBarButtonItem" image="statistics_icon" id="gR3-FH-6LI">
+                            <color key="tintColor" red="0.40377155172413792" green="0.76452047413793101" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="showStatisticsController:" destination="BYZ-38-t0r" id="UFE-P2-zhd"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="take_note_icon" id="6sc-0c-dwR">
-                            <color key="tintColor" red="0.41568627450000001" green="0.72941176470000002" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.40377155170000001" green="0.76452047410000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="addNote:" destination="BYZ-38-t0r" id="JsH-Aw-i8X"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addNoteItem" destination="6sc-0c-dwR" id="5DX-Au-MtL"/>
                         <outlet property="notesTableView" destination="OtM-fR-jue" id="7RP-jY-8IW"/>
+                        <segue destination="2f2-Qs-Jxa" kind="show" identifier="ToStatistics" id="woC-PR-JpG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="737" y="88"/>
+        </scene>
+        <!--数据统计-->
+        <scene sceneID="LwZ-gg-V43">
+            <objects>
+                <viewController id="2f2-Qs-Jxa" customClass="StatisticsViewController" customModule="ENote" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Lan-hn-rq4"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ijk-bs-l4G"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ENX-Gx-9WV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eh-f2-nl6" customClass="BarChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="116" width="375" height="551"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="G1L-1A-ZlR">
+                                <rect key="frame" x="16" y="72" width="343" height="29"/>
+                                <segments>
+                                    <segment title="一周"/>
+                                    <segment title="一个月"/>
+                                    <segment title="一年"/>
+                                    <segment title="自定义"/>
+                                </segments>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0eh-f2-nl6" firstAttribute="top" secondItem="G1L-1A-ZlR" secondAttribute="bottom" constant="16" id="Y6f-xc-gPC"/>
+                            <constraint firstItem="Ijk-bs-l4G" firstAttribute="top" secondItem="0eh-f2-nl6" secondAttribute="bottom" id="esb-1J-XJy"/>
+                            <constraint firstAttribute="trailing" secondItem="0eh-f2-nl6" secondAttribute="trailing" id="jbh-dh-Ar8"/>
+                            <constraint firstAttribute="trailing" secondItem="G1L-1A-ZlR" secondAttribute="trailing" constant="16" id="osR-o6-MQB"/>
+                            <constraint firstItem="0eh-f2-nl6" firstAttribute="leading" secondItem="ENX-Gx-9WV" secondAttribute="leading" id="s9I-zT-0b3"/>
+                            <constraint firstItem="G1L-1A-ZlR" firstAttribute="leading" secondItem="ENX-Gx-9WV" secondAttribute="leading" constant="16" id="tsr-Wg-cxY"/>
+                            <constraint firstItem="G1L-1A-ZlR" firstAttribute="top" secondItem="Lan-hn-rq4" secondAttribute="bottom" constant="8" id="xtD-su-PR8"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="数据统计" id="7yQ-2K-e4Y"/>
+                    <connections>
+                        <outlet property="barChartView" destination="0eh-f2-nl6" id="Z8e-5s-MED"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m3X-2J-XWD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1589.5999999999999" y="83.208395802098963"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lWk-7P-kA0">
@@ -58,8 +112,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="01f-IV-4i0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.40377155170000001" green="0.76452047410000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" red="1" green="0.25055972992758618" blue="0.11654900678551704" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.40377155170000001" green="0.76452047410000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="textShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
@@ -74,6 +129,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="statistics_icon" width="30" height="30"/>
         <image name="take_note_icon" width="30" height="30"/>
     </resources>
 </document>
