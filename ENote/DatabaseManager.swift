@@ -177,7 +177,7 @@ class DatabaseManager {
     }
 
     // 虚假数据填充函数
-    func fillData() {
+    func fillMockData() {
         let dataPart1 = ["今天上午10点", "今天中午", "下午6点",
                       "晚上7点", "今天晚上", "下午6点之前", "晚上7点开始", "晚上10点以后"]
         
@@ -189,14 +189,14 @@ class DatabaseManager {
                       "学习Swift3.0, 根据官方文档学习新的语法和API, 到著名的论坛去看相关的博客",
                       "看美剧, 练习英语听力能力, 英语为六级考试做好准备"]
         
-        for i in 1...1200 {
+        for i in 1...2000 {
             let index1 = Int(arc4random() % 8)
             let index2 = Int(arc4random() % 8)
             
             let content = dataPart1[index1] + dataPart2[index2]
             let state = Int(arc4random() % 2)
             
-            let beforeDay = i / 5 + 1
+            let beforeDay = i / 10 + 1
             
             let insertDataSql = "INSERT INTO history_notes (content, note_date, state) VALUES (?, datetime('now', '-\(beforeDay) day'), ?)"
             
@@ -208,6 +208,17 @@ class DatabaseManager {
             catch {
                 print(error)
             }
+        }
+    }
+    
+    func deleteAllHistoryData() {
+        let deleteAllHistoryDataSql = "DELETE FROM history_notes"
+        
+        do {
+            try database.executeUpdate(deleteAllHistoryDataSql, values: nil)
+        }
+        catch {
+            print(error)
         }
     }
 }
