@@ -74,7 +74,7 @@
                                 <rect key="frame" x="0.0" y="150" width="375" height="507"/>
                                 <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V3T-rF-xBd">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V3T-rF-xBd">
                                 <rect key="frame" x="8" y="447" width="359" height="200"/>
                                 <subviews>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="S67-El-WFs">
@@ -189,6 +189,7 @@
                         <outlet property="beginTimeButton" destination="Ztn-pp-fKo" id="Jd0-1S-20E"/>
                         <outlet property="datePicker" destination="S67-El-WFs" id="pqU-vx-EBg"/>
                         <outlet property="datePickerBottomConstraint" destination="j5I-iM-h4z" id="aAM-bf-naf"/>
+                        <outlet property="datePickerContainerView" destination="V3T-rF-xBd" id="qic-Og-2sZ"/>
                         <outlet property="endTimeButton" destination="D2q-VZ-KcD" id="X1N-Rp-5U5"/>
                         <outlet property="modelSegmentControl" destination="G1L-1A-ZlR" id="sS5-9s-hoF"/>
                     </connections>

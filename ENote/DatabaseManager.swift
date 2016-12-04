@@ -37,10 +37,10 @@ class DatabaseManager {
         }
         
         // 执行创建表的SQL语句
-        let historyNotesTable = "CREATE TABLE IF NOT EXISTS history_notes(id INTEGER PRIMARY KEY AUTOINCREMENT, note_date DATE NOT NULL, content TEXT NOT NULL, state BOOLEAN NOT NULL)"
+        let historyNotesTable = "CREATE TABLE IF NOT EXISTS history_notes(id INTEGER PRIMARY KEY AUTOINCREMENT, note_date DATE NOT NULL, content TEXT NOT NULL, state INTEGER NOT NULL)"
         let historyNotesTableState = database.executeStatements(historyNotesTable)
         
-        let todayNotesTable = "CREATE TABLE IF NOT EXISTS today_notes(id INTEGER PRIMARY KEY AUTOINCREMENT, note_date DATETIME NOT NULL DEFAULT (datetime('now', 'localtime')), content TEXT NOT NULL UNIQUE, state BOOLEAN NOT NULL DEFAULT 0)"
+        let todayNotesTable = "CREATE TABLE IF NOT EXISTS today_notes(id INTEGER PRIMARY KEY AUTOINCREMENT, note_date DATETIME NOT NULL DEFAULT (datetime('now', 'localtime')), content TEXT NOT NULL UNIQUE, state INTEGER NOT NULL DEFAULT 0)"
         let todayNotesTableState = database.executeStatements(todayNotesTable)
         
         if historyNotesTableState && todayNotesTableState {
@@ -72,7 +72,7 @@ class DatabaseManager {
         let updateNoteSql = "UPDATE today_notes SET state = (?) WHERE id = (?)"
         
         do{
-            try database.executeUpdate(updateNoteSql, values: [true, id])
+            try database.executeUpdate(updateNoteSql, values: [1, id])
             NotesManager.sharedManager.updateTodayNotes()
         }
         catch {
@@ -129,9 +129,9 @@ class DatabaseManager {
     }
     
     func updateHistoryTable() {
-        let updateHistoryNotesSql = "INSERT INTO history_notes (content, note_date, state) SELECT content, note_date, state FROM today_notes WHERE date(note_date) != date('now')"
+        let updateHistoryNotesSql = "INSERT INTO history_notes (content, note_date, state) SELECT content, note_date, state FROM today_notes WHERE date(note_date, 'localtime') != date('now', 'localtime')"
         
-        let deleteExpireNotesSql = "DELETE FROM today_notes WHERE date(note_date) != date('now')"
+        let deleteExpireNotesSql = "DELETE FROM today_notes WHERE date(note_date, 'localtime') != date('now', 'localtime')"
         
         do {
             try database.executeUpdate(updateHistoryNotesSql, values: nil)
@@ -144,16 +144,25 @@ class DatabaseManager {
         NotesManager.sharedManager.updateTodayNotes()
     }
     
-    func historyDataStatistics(beginTime: Date, endTime: Date) -> [DailyNotesStatistics] {
+    func historyDataStatistics(beginTime: Date, endTime: Date, displayModel: DisplayModel = .Day) -> [NotesStatistics] {
         
-        let queryFinishedNotesSql = "SELECT date(note_date), count(state) AS finish_count FROM history_notes WHERE state = 1 AND date(?) <= note_date AND date(note_date) <= date(?) GROUP BY date(note_date)"
+        var timeFormatteString = "%j"
+        if displayModel == .Week {
+            timeFormatteString = "%W"
+        }
+        else if displayModel == .Month {
+            timeFormatteString = "%m"
+        }
         
-        let queryUnfinishedNoteSql = "SELECT date(note_date), count(state) AS unfinish_count FROM history_notes WHERE state = 0 AND date(?) <= note_date AND date(note_date) <= date(?) GROUP BY date(note_date)"
+        
+        let queryFinishedNotesSql = "SELECT date(note_date), count(state) AS finish_count, strftime('\(timeFormatteString)', note_date, 'localtime') AS time_label FROM history_notes WHERE state = 1 AND date(?) <= note_date AND date(note_date) <= date(?) GROUP BY strftime('\(timeFormatteString)', note_date, 'localtime')"
+        
+        let queryUnfinishedNoteSql = "SELECT date(note_date), count(state) AS unfinish_count, strftime('\(timeFormatteString)', note_date, 'localtime') AS time_label FROM history_notes WHERE state = 0 AND date(?) <= note_date AND date(note_date) <= date(?) GROUP BY strftime('\(timeFormatteString)', note_date, 'localtime')"
         
         let beginTimeInFormatte = dateInFormatte(date: beginTime, formatte: "yyyy-MM-dd")
         let endTimeInFormatte = dateInFormatte(date: endTime, formatte: "yyyy-MM-dd")
         
-        var notesStatistics = [DailyNotesStatistics]()
+        var notesStatistics = [NotesStatistics]()
         
         do {
             let finishedRecord = try database.executeQuery(queryFinishedNotesSql, values: [beginTimeInFormatte, endTimeInFormatte])
@@ -161,12 +170,13 @@ class DatabaseManager {
             
             while finishedRecord.next() && unfinishRecord.next() {
                 let date = finishedRecord.string(forColumnIndex: 0)!
+                let timeLabel = finishedRecord.string(forColumn: "time_label")!
                 let finishedCount = Int(finishedRecord.longLongInt(forColumn: "finish_count"))
                 let unfinishedCount = Int(unfinishRecord.longLongInt(forColumn: "unfinish_count"))
                 
-                let dailyNotesStatistics = DailyNotesStatistics(date: date, finishedCount: finishedCount, unfinishedCount: unfinishedCount)
+                let statistics = NotesStatistics(date: date, timeLabel: timeLabel, finishedCount: finishedCount, unfinishedCount: unfinishedCount)
                 
-                notesStatistics.append(dailyNotesStatistics)
+                notesStatistics.append(statistics)
             }
         }
         catch {
@@ -188,13 +198,15 @@ class DatabaseManager {
                       "做好课程设计, 完成代码打包和文档编写",
                       "学习Swift3.0, 根据官方文档学习新的语法和API, 到著名的论坛去看相关的博客",
                       "看美剧, 练习英语听力能力, 英语为六级考试做好准备"]
+        let posibility = [0, 1, 1, 1, 0, 0, 1, 1]
         
         for i in 1...2000 {
             let index1 = Int(arc4random() % 8)
             let index2 = Int(arc4random() % 8)
             
             let content = dataPart1[index1] + dataPart2[index2]
-            let state = Int(arc4random() % 2)
+            
+            let state = posibility[Int(arc4random() % 8)]
             
             let beforeDay = i / 10 + 1
             

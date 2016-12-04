@@ -44,7 +44,10 @@ class NotesViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(NotesViewController.keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         //databaseManager.deleteAllHistoryData()
-        //databaseManager.fillMockData()
+//        let dispatchQueue = DispatchQueue.global(qos: .default)
+//        dispatchQueue.async { 
+//            self.databaseManager.fillMockData()
+//        }
     }
     
     func currentDateInFormatte(formatte: String) -> String {
