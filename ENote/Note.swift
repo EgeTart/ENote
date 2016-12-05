@@ -22,6 +22,6 @@ class Note: NSObject {
     }
     
     override var description: String {
-        return content
+        return date + ": " + content
     }
 }

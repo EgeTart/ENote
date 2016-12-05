@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -87,7 +88,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="历史便签" id="deD-1Y-2iv">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="BXz-bl-kBZ"/>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="search" id="BXz-bl-kBZ">
+                                <connections>
+                                    <action selector="showSearchBar:" destination="HY5-h7-bP2" id="QZ5-zE-7y2"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="reset_icon" id="vbg-1X-me3">
+                                <connections>
+                                    <action selector="undo:" destination="HY5-h7-bP2" id="EyE-GY-9QH"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="notesCollectionView" destination="hHA-Ny-ZJG" id="TWG-Xh-ThS"/>
@@ -263,6 +275,7 @@
     </scenes>
     <resources>
         <image name="option_icon" width="30" height="30"/>
+        <image name="reset_icon" width="30" height="30"/>
         <image name="take_note_icon" width="30" height="30"/>
     </resources>
 </document>

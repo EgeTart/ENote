@@ -22,6 +22,12 @@ class HistoryNotesViewController: UIViewController {
     
     var sectionTitles = [String]()
     
+    var backupHistoryNotes: [[Note]]!
+    var backupSectionTitles: [String]!
+    var contentOffset: CGPoint!
+    
+    lazy var searchController = UISearchController(searchResultsController: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,9 +48,14 @@ class HistoryNotesViewController: UIViewController {
             layout.delegate = self
         }
         
-        //notesCollectionView.mj_footer = MJRefreshFooter.init(refreshingTarget: self, refreshingAction: #selector(HistoryNotesViewController.loadMoreHistoryNotes))
+        setupRefreshFooter()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(HistoryNotesViewController.deviceOrientionChanged(notification:)), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+    }
+    
+    func setupRefreshFooter() {
         let footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(HistoryNotesViewController.loadMoreHistoryNotes))
+        footer?.setTitle("上拉加载更多", for: .idle)
         footer?.setTitle("上拉加载更多", for: .pulling)
         footer?.setTitle("正在加载.....", for: .refreshing)
         footer?.setTitle("全部加载完毕", for: .noMoreData)
@@ -73,9 +84,6 @@ class HistoryNotesViewController: UIViewController {
         
         notesCollectionView.mj_footer.endRefreshing()
         
-        print(sectionTitles)
-        print(historyNotes.count)
-        
         let range = Range<Int>(uncheckedBounds: (lower: originCount, upper: historyNotes.count))
         let indexSet = IndexSet(integersIn: range)
         
@@ -87,11 +95,58 @@ class HistoryNotesViewController: UIViewController {
         
     }
     
+    func searchHistoryNotes(content: String) {
+        
+        if backupHistoryNotes == nil {
+            backupHistoryNotes = historyNotes
+            backupSectionTitles = sectionTitles
+            contentOffset = notesCollectionView.contentOffset
+        }
+        
+        notesCollectionView.mj_footer = nil
+        
+        historyNotes = databaseManager.queryHistoryNotes(content: content)
+        
+        sectionTitles = historyNotes.map({ (notes: [Note]) -> String in
+            return notes[0].date
+        })
+        
+        notesCollectionView.reloadData()
+        notesCollectionView.contentOffset = CGPoint(x: 0, y: 0)
+        
+    }
+    
+    func deviceOrientionChanged(notification: Notification) {
+        notesCollectionView.reloadData()
+    }
+    
     func heightForContent(content: String, font: UIFont, width: CGFloat) -> CGFloat {
         
         let rect = NSString(string: content).boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
         
         return ceil(rect.height)
+    }
+    
+    @IBAction func showSearchBar(_ sender: UIBarButtonItem) {
+
+        searchController.hidesNavigationBarDuringPresentation = true
+        searchController.searchBar.delegate = self
+        
+        present(searchController, animated: true, completion: nil)
+    }
+    
+    @IBAction func undo(_ sender: UIBarButtonItem) {
+        if backupHistoryNotes != nil {
+            historyNotes = backupHistoryNotes
+            sectionTitles = backupSectionTitles
+            
+            notesCollectionView.reloadData()
+            notesCollectionView.contentOffset = contentOffset
+            backupHistoryNotes = nil
+            backupSectionTitles = nil
+            
+            setupRefreshFooter()
+        }
     }
 }
 
@@ -144,5 +199,25 @@ extension HistoryNotesViewController: HistoryNoteLayoutDelegate {
         let contentHeight = heightForContent(content: note.content, font: font, width: width)
         
         return contentHeight
+    }
+}
+
+extension HistoryNotesViewController: UISearchBarDelegate {
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = nil
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print(searchBar.text!)
+        
+        let searchText = searchBar.text!.trimmingCharacters(in: CharacterSet.whitespaces)
+        dismiss(animated: true, completion: nil)
+        
+        if searchText != "" {
+            searchHistoryNotes(content: searchText)
+        }
+        
+        searchBar.text = nil
     }
 }

@@ -16,7 +16,13 @@ class HistoryNotesLayout: UICollectionViewLayout {
     
     var delegate: HistoryNoteLayoutDelegate!
     
-    let numberOfColumns = 2
+    var numberOfColumns: Int {
+        if UIDevice.current.orientation == UIDeviceOrientation.landscapeLeft || UIDevice.current.orientation == UIDeviceOrientation.landscapeRight {
+            return 3
+        }
+        
+        return 2
+    }
     let cellPadding: CGFloat = 6.0
     
     private var attributesCache = [[UICollectionViewLayoutAttributes]]()
@@ -30,7 +36,7 @@ class HistoryNotesLayout: UICollectionViewLayout {
     private let fixHeight: CGFloat = 38.0
     
     override func prepare() {
-        
+
         if attributesCache.isEmpty {
             let columnWidth = contentWidth / CGFloat(numberOfColumns)
             var xOffset = [CGFloat]()
@@ -118,4 +124,5 @@ class HistoryNotesLayout: UICollectionViewLayout {
     override func invalidateLayout() {
         attributesCache.removeAll()
     }
+    
 }

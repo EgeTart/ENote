@@ -224,6 +224,47 @@ class DatabaseManager {
         return historyNotes
     }
     
+    func queryHistoryNotes(content: String) -> [[Note]] {
+        let queryHistoryNotesSql = "SELECT id, content, strftime('%Y-%m-%d', note_date) as formatte_date, state FROM history_notes WHERE content LIKE '%\(content)%'"
+        
+        var historyNotes = [[Note]]()
+        
+        do {
+            let noteRecords = try database.executeQuery(queryHistoryNotesSql, values: nil)
+            
+            var notes = [Note]()
+            while noteRecords.next() {
+                let id = Int(noteRecords.int(forColumn: "id"))
+                let content = noteRecords.string(forColumn: "content")!
+                let date = noteRecords.string(forColumn: "formatte_date")!
+                let state = noteRecords.bool(forColumn: "state")
+                
+                let note = Note(id: id, content: content, date: date, state: state)
+                
+                if notes.isEmpty {
+                    notes.append(note)
+                }
+                else if notes.last!.date == date {
+                    notes.append(note)
+                }
+                else {
+                    historyNotes.append(notes)
+                    notes = [Note]()
+                    notes.append(note)
+                }
+            }
+            
+            if !notes.isEmpty {
+                historyNotes.append(notes)
+            }
+        }
+        catch {
+            print(error)
+        }
+        
+        return historyNotes
+    }
+    
     // MARK: - 为进行测试而编写的方法
     // 虚假数据填充函数
     func fillMockData() {

@@ -42,15 +42,25 @@ class NotesViewController: UIViewController {
         notesTableView.estimatedRowHeight = 50
         
         notesTableView.register(UINib(nibName: "NoteCell", bundle: Bundle.main), forCellReuseIdentifier: "NoteCell")
- 
-        NotificationCenter.default.addObserver(self, selector: #selector(NotesViewController.keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(NotesViewController.keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         //databaseManager.deleteAllHistoryData()
 //        let dispatchQueue = DispatchQueue.global(qos: .default)
 //        dispatchQueue.async { 
 //            self.databaseManager.fillMockData()
 //        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(NotesViewController.keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NotesViewController.keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
     }
     
     func currentDateInFormatte(formatte: String) -> String {
