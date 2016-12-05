@@ -40,8 +40,8 @@ class StatisticsViewController: UIViewController {
     var displayModel: DisplayModel = .Day
     var timeButtonTag = 101
     
-    var beginTime = Date(timeInterval: -24 * 60 * 60 * 8.0, since: Date())
-    var endTime = Date(timeInterval: -24 * 60 * 60 * 1, since: Date())
+    var beginDate = Date(timeInterval: -24 * 60 * 60 * 8.0, since: Date())
+    var endDate = Date(timeInterval: -24 * 60 * 60 * 1, since: Date())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +61,7 @@ class StatisticsViewController: UIViewController {
     
     func updateChart() {
         
-        notesStatistics = databaseManager.historyDataStatistics(beginTime: beginTime, endTime: endTime, displayModel: displayModel)
+        notesStatistics = databaseManager.historyDataStatistics(beginDate: beginDate, endDate: endDate, displayModel: displayModel)
         
         timeLabels = notesStatistics.map({ (statistics: NotesStatistics) -> String in
             
@@ -214,8 +214,8 @@ class StatisticsViewController: UIViewController {
     }
     
     func setTimeButtonTitle() {
-        let beginTimeButtonTitle = dateInFormatte(date: beginTime, formatte: "yyyy-MM-dd")
-        let endTimeButtonTitle = dateInFormatte(date: endTime, formatte: "yyyy-MM-dd")
+        let beginTimeButtonTitle = dateInFormatte(date: beginDate, formatte: "yyyy-MM-dd")
+        let endTimeButtonTitle = dateInFormatte(date: endDate, formatte: "yyyy-MM-dd")
         
         beginTimeButton.setTitle(beginTimeButtonTitle, for: .normal)
         endTimeButton.setTitle(endTimeButtonTitle, for: .normal)
@@ -251,13 +251,13 @@ class StatisticsViewController: UIViewController {
         setDatePickerButtonConstraint(constraint: -220.0)
         
         if timeButtonTag == 101 {
-            beginTime = datePicker.date
+            beginDate = datePicker.date
         }
         else {
-            endTime = datePicker.date
+            endDate = datePicker.date
         }
         
-        if beginTime > endTime {
+        if beginDate > endDate {
             let alert = UIAlertController(title: "错误提示", message: "起始时间大于结束时间", preferredStyle: .alert)
             let action = UIAlertAction(title: "确定", style: .default, handler: nil)
             

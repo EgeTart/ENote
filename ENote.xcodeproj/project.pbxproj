@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		94A3426B6FBD944B6902B6EE /* Pods_ENote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 210912EB8A81C669E7E02B8B /* Pods_ENote.framework */; };
+		F631B3011DF4342600D98609 /* YBPopupMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = F631B3001DF4342600D98609 /* YBPopupMenu.m */; };
+		F631B3031DF4432000D98609 /* HistoryNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631B3021DF4432000D98609 /* HistoryNotesViewController.swift */; };
+		F631B3061DF4456000D98609 /* HistoryNoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631B3041DF4456000D98609 /* HistoryNoteCell.swift */; };
+		F631B3071DF4456000D98609 /* HistoryNoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F631B3051DF4456000D98609 /* HistoryNoteCell.xib */; };
+		F631B3091DF481FB00D98609 /* HistoryNotesLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631B3081DF481FB00D98609 /* HistoryNotesLayout.swift */; };
 		F688570A1DEFC5C000B100EF /* NoteInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F68857091DEFC5C000B100EF /* NoteInputView.swift */; };
 		F68857101DEFC65C00B100EF /* NoteInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F688570F1DEFC65C00B100EF /* NoteInputView.xib */; };
 		F691C1321DEC560300EAFEE8 /* Sentence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F691C1311DEC560300EAFEE8 /* Sentence.swift */; };
@@ -30,6 +35,13 @@
 		210912EB8A81C669E7E02B8B /* Pods_ENote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ENote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FDA4C6D70CCBB8780D5EAAA /* Pods-ENote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ENote.release.xcconfig"; path = "Pods/Target Support Files/Pods-ENote/Pods-ENote.release.xcconfig"; sourceTree = "<group>"; };
 		C7C5C9D2289C955706E4968A /* Pods-ENote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ENote.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ENote/Pods-ENote.debug.xcconfig"; sourceTree = "<group>"; };
+		F631B2FE1DF4342600D98609 /* ENote-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ENote-Bridging-Header.h"; sourceTree = "<group>"; };
+		F631B2FF1DF4342600D98609 /* YBPopupMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBPopupMenu.h; sourceTree = "<group>"; };
+		F631B3001DF4342600D98609 /* YBPopupMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBPopupMenu.m; sourceTree = "<group>"; };
+		F631B3021DF4432000D98609 /* HistoryNotesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryNotesViewController.swift; sourceTree = "<group>"; };
+		F631B3041DF4456000D98609 /* HistoryNoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryNoteCell.swift; sourceTree = "<group>"; };
+		F631B3051DF4456000D98609 /* HistoryNoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryNoteCell.xib; sourceTree = "<group>"; };
+		F631B3081DF481FB00D98609 /* HistoryNotesLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryNotesLayout.swift; sourceTree = "<group>"; };
 		F68857091DEFC5C000B100EF /* NoteInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteInputView.swift; sourceTree = "<group>"; };
 		F688570F1DEFC65C00B100EF /* NoteInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteInputView.xib; sourceTree = "<group>"; };
 		F691C1311DEC560300EAFEE8 /* Sentence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sentence.swift; sourceTree = "<group>"; };
@@ -79,11 +91,23 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		F631B2FD1DF4340100D98609 /* YBPopupMenu */ = {
+			isa = PBXGroup;
+			children = (
+				F631B2FF1DF4342600D98609 /* YBPopupMenu.h */,
+				F631B3001DF4342600D98609 /* YBPopupMenu.m */,
+			);
+			name = YBPopupMenu;
+			sourceTree = "<group>";
+		};
 		F68857081DEFC57B00B100EF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F631B2FD1DF4340100D98609 /* YBPopupMenu */,
 				F68857091DEFC5C000B100EF /* NoteInputView.swift */,
 				F6FFDDC91DF11FD200E5B733 /* NoteCell.swift */,
+				F631B3041DF4456000D98609 /* HistoryNoteCell.swift */,
+				F631B3081DF481FB00D98609 /* HistoryNotesLayout.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -95,6 +119,7 @@
 				F6C0A39F1DEC4A7B0087B2BA /* LaunchScreen.storyboard */,
 				F688570F1DEFC65C00B100EF /* NoteInputView.xib */,
 				F6FFDDCA1DF11FD200E5B733 /* NoteCell.xib */,
+				F631B3051DF4456000D98609 /* HistoryNoteCell.xib */,
 			);
 			name = "Storyboard & Xib";
 			sourceTree = "<group>";
@@ -117,6 +142,7 @@
 				F6C0A39D1DEC4A7B0087B2BA /* Assets.xcassets */,
 				F6C0A3A21DEC4A7B0087B2BA /* Info.plist */,
 				F6C0A3961DEC4A7B0087B2BA /* AppDelegate.swift */,
+				F631B2FE1DF4342600D98609 /* ENote-Bridging-Header.h */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -126,6 +152,7 @@
 			children = (
 				F6C0A3981DEC4A7B0087B2BA /* NotesViewController.swift */,
 				F6BF7C401DF18FA2005082FE /* StatisticsViewController.swift */,
+				F631B3021DF4432000D98609 /* HistoryNotesViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -233,6 +260,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F631B3071DF4456000D98609 /* HistoryNoteCell.xib in Resources */,
 				F6FFDDCC1DF11FD200E5B733 /* NoteCell.xib in Resources */,
 				F6C0A3A11DEC4A7B0087B2BA /* LaunchScreen.storyboard in Resources */,
 				F6C0A39E1DEC4A7B0087B2BA /* Assets.xcassets in Resources */,
@@ -296,7 +324,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F631B3011DF4342600D98609 /* YBPopupMenu.m in Sources */,
 				F6C0A3991DEC4A7B0087B2BA /* NotesViewController.swift in Sources */,
+				F631B3031DF4432000D98609 /* HistoryNotesViewController.swift in Sources */,
 				F691C1321DEC560300EAFEE8 /* Sentence.swift in Sources */,
 				F6BD40241DF01187005A69E3 /* DatabaseManager.swift in Sources */,
 				F6BD40281DF03644005A69E3 /* NotesManager.swift in Sources */,
@@ -306,7 +336,9 @@
 				F6BF7C411DF18FA2005082FE /* StatisticsViewController.swift in Sources */,
 				F6BF7C441DF19C80005082FE /* Helper.swift in Sources */,
 				F6BD40261DF0362D005A69E3 /* Note.swift in Sources */,
+				F631B3061DF4456000D98609 /* HistoryNoteCell.swift in Sources */,
 				F6FFDDCB1DF11FD200E5B733 /* NoteCell.swift in Sources */,
+				F631B3091DF481FB00D98609 /* HistoryNotesLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,11 +465,14 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = L225J6UWE9;
 				INFOPLIST_FILE = ENote/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.egetart.ENote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ENote/ENote-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -448,11 +483,13 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = L225J6UWE9;
 				INFOPLIST_FILE = ENote/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.egetart.ENote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ENote/ENote-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

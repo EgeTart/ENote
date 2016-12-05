@@ -53,6 +53,9 @@ class DatabaseManager {
     
     
     // MARK: - 公有方法
+    func closeDatabase() {
+        database.close()
+    }
     
     // 添加一条待做事件
     func insertNote(content: String) {
@@ -104,10 +107,10 @@ class DatabaseManager {
             while noteRecords.next() {
                 let id = noteRecords.int(forColumn: "id")
                 let content = noteRecords.string(forColumn: "content")
-                let date = noteRecords.date(forColumn: "note_date")
+                let date = noteRecords.string(forColumn: "note_date")!
                 let state = noteRecords.bool(forColumn: "state")
                 
-                let note = Note(id: Int(id), content: content!, date: date!, state: state)
+                let note = Note(id: Int(id), content: content!, date: date, state: state)
                 
                 if state {
                     finishedNotes.append(note)
@@ -129,9 +132,9 @@ class DatabaseManager {
     }
     
     func updateHistoryTable() {
-        let updateHistoryNotesSql = "INSERT INTO history_notes (content, note_date, state) SELECT content, note_date, state FROM today_notes WHERE date(note_date, 'localtime') != date('now', 'localtime')"
+        let updateHistoryNotesSql = "INSERT INTO history_notes (content, note_date, state) SELECT content, note_date, state FROM today_notes WHERE strftime('%Y-%m-%d', note_date) != strftime('%Y-%m-%d', 'now', 'localtime')"
         
-        let deleteExpireNotesSql = "DELETE FROM today_notes WHERE date(note_date, 'localtime') != date('now', 'localtime')"
+        let deleteExpireNotesSql = "DELETE FROM today_notes WHERE strftime('%Y-%m-%d', note_date) != strftime('%Y-%m-%d', 'now', 'localtime')"
         
         do {
             try database.executeUpdate(updateHistoryNotesSql, values: nil)
@@ -144,23 +147,23 @@ class DatabaseManager {
         NotesManager.sharedManager.updateTodayNotes()
     }
     
-    func historyDataStatistics(beginTime: Date, endTime: Date, displayModel: DisplayModel = .Day) -> [NotesStatistics] {
+    func historyDataStatistics(beginDate: Date, endDate: Date, displayModel: DisplayModel = .Day) -> [NotesStatistics] {
         
-        var timeFormatteString = "%j"
+        var dateFormatteString = "%j"
         if displayModel == .Week {
-            timeFormatteString = "%W"
+            dateFormatteString = "%W"
         }
         else if displayModel == .Month {
-            timeFormatteString = "%m"
+            dateFormatteString = "%m"
         }
         
         
-        let queryFinishedNotesSql = "SELECT date(note_date), count(state) AS finish_count, strftime('\(timeFormatteString)', note_date, 'localtime') AS time_label FROM history_notes WHERE state = 1 AND date(?) <= note_date AND date(note_date) <= date(?) GROUP BY strftime('\(timeFormatteString)', note_date, 'localtime')"
+        let queryFinishedNotesSql = "SELECT date(note_date), count(state) AS finish_count, strftime('\(dateFormatteString)', note_date, 'localtime') AS time_label FROM history_notes WHERE state = 1 AND date(?) <= note_date AND date(note_date) <= date(?) GROUP BY strftime('\(dateFormatteString)', note_date, 'localtime')"
         
-        let queryUnfinishedNoteSql = "SELECT date(note_date), count(state) AS unfinish_count, strftime('\(timeFormatteString)', note_date, 'localtime') AS time_label FROM history_notes WHERE state = 0 AND date(?) <= note_date AND date(note_date) <= date(?) GROUP BY strftime('\(timeFormatteString)', note_date, 'localtime')"
+        let queryUnfinishedNoteSql = "SELECT date(note_date), count(state) AS unfinish_count, strftime('\(dateFormatteString)', note_date, 'localtime') AS time_label FROM history_notes WHERE state = 0 AND date(?) <= note_date AND date(note_date) <= date(?) GROUP BY strftime('\(dateFormatteString)', note_date, 'localtime')"
         
-        let beginTimeInFormatte = dateInFormatte(date: beginTime, formatte: "yyyy-MM-dd")
-        let endTimeInFormatte = dateInFormatte(date: endTime, formatte: "yyyy-MM-dd")
+        let beginTimeInFormatte = dateInFormatte(date: beginDate, formatte: "yyyy-MM-dd")
+        let endTimeInFormatte = dateInFormatte(date: endDate, formatte: "yyyy-MM-dd")
         
         var notesStatistics = [NotesStatistics]()
         
@@ -186,6 +189,40 @@ class DatabaseManager {
         return notesStatistics
     }
 
+    func queryHistoryNotes(beginDate: Date) -> [[Note]] {
+        var historyNotes = [[Note]]()
+        
+        let queryHistoryNotesSql = "SELECT id, content, strftime('%Y-%m-%d', note_date) as formatte_date, state FROM history_notes WHERE date(note_date) = date(?)"
+        
+        for i in 0..<5 {
+            let formatteDate = dateInFormatte(date: Date(timeInterval: Double(-24 * 60 * 60 * i), since: beginDate), formatte: "yyyy-MM-dd")
+            
+            var notes = [Note]()
+            
+            do {
+                let noteRecords = try database.executeQuery(queryHistoryNotesSql, values: [formatteDate])
+                
+                while noteRecords.next() {
+                    let id = Int(noteRecords.int(forColumn: "id"))
+                    let content = noteRecords.string(forColumn: "content")!
+                    let date = noteRecords.string(forColumn: "formatte_date")!
+                    let state = noteRecords.bool(forColumn: "state")
+                    
+                    let note = Note(id: id, content: content, date: date, state: state)
+                    notes.append(note)
+                }
+                
+                historyNotes.append(notes)
+            }
+            catch {
+                print(error)
+            }
+        }
+        
+        return historyNotes
+    }
+    
+    // MARK: - 为进行测试而编写的方法
     // 虚假数据填充函数
     func fillMockData() {
         let dataPart1 = ["今天上午10点", "今天中午", "下午6点",
@@ -223,6 +260,7 @@ class DatabaseManager {
         }
     }
     
+    // 删除所有历史数据
     func deleteAllHistoryData() {
         let deleteAllHistoryDataSql = "DELETE FROM history_notes"
         

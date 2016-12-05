@@ -35,7 +35,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="ENote便签" id="9yX-aJ-TVz">
-                        <barButtonItem key="leftBarButtonItem" image="statistics_icon" id="gR3-FH-6LI">
+                        <barButtonItem key="leftBarButtonItem" image="option_icon" id="gR3-FH-6LI">
                             <color key="tintColor" red="0.40377155172413792" green="0.76452047413793101" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="showStatisticsController:" destination="BYZ-38-t0r" id="UFE-P2-zhd"/>
@@ -52,11 +52,50 @@
                         <outlet property="addNoteItem" destination="6sc-0c-dwR" id="5DX-Au-MtL"/>
                         <outlet property="notesTableView" destination="OtM-fR-jue" id="7RP-jY-8IW"/>
                         <segue destination="2f2-Qs-Jxa" kind="show" identifier="ToStatistics" id="woC-PR-JpG"/>
+                        <segue destination="HY5-h7-bP2" kind="show" identifier="ToHistoryNotes" id="G0W-m2-Lil"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="737" y="88"/>
+        </scene>
+        <!--历史便签-->
+        <scene sceneID="g4q-wa-KXp">
+            <objects>
+                <viewController id="HY5-h7-bP2" customClass="HistoryNotesViewController" customModule="ENote" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vnC-uc-J0W"/>
+                        <viewControllerLayoutGuide type="bottom" id="BBv-S6-Q9G"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="65u-aU-0fE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hHA-Ny-ZJG">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewLayout key="collectionViewLayout" id="wX9-i8-Fdc" customClass="HistoryNotesLayout" customModule="ENote" customModuleProvider="target"/>
+                                <cells/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="hHA-Ny-ZJG" secondAttribute="trailing" id="Gm4-Yt-Vlg"/>
+                            <constraint firstItem="hHA-Ny-ZJG" firstAttribute="leading" secondItem="65u-aU-0fE" secondAttribute="leading" id="Vi2-fG-I2c"/>
+                            <constraint firstItem="hHA-Ny-ZJG" firstAttribute="top" secondItem="65u-aU-0fE" secondAttribute="top" id="bnP-aT-fOT"/>
+                            <constraint firstItem="BBv-S6-Q9G" firstAttribute="top" secondItem="hHA-Ny-ZJG" secondAttribute="bottom" id="iyD-p5-qfz"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="历史便签" id="deD-1Y-2iv">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="BXz-bl-kBZ"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="notesCollectionView" destination="hHA-Ny-ZJG" id="TWG-Xh-ThS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TMg-8o-6dE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1512.8" y="327.88605697151428"/>
         </scene>
         <!--数据统计-->
         <scene sceneID="LwZ-gg-V43">
@@ -196,7 +235,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m3X-2J-XWD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1589.5999999999999" y="83.208395802098963"/>
+            <point key="canvasLocation" x="1514" y="-369"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="lWk-7P-kA0">
@@ -223,7 +262,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="statistics_icon" width="30" height="30"/>
+        <image name="option_icon" width="30" height="30"/>
         <image name="take_note_icon" width="30" height="30"/>
     </resources>
 </document>

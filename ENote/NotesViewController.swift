@@ -26,6 +26,9 @@ class NotesViewController: UIViewController {
     let databaseManager = DatabaseManager.sharedManager
     let notesManager = NotesManager.sharedManager
     
+    let optionNames = ["数据统计", "历史便签"]
+    let optionIconNames = ["statistics_icon", "history_icon"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -121,7 +124,12 @@ class NotesViewController: UIViewController {
     }
     
     @IBAction func showStatisticsController(_ sender: UIBarButtonItem) {
-        self.performSegue(withIdentifier: "ToStatistics", sender: self)
+        
+        let yPosition = self.navigationController!.navigationBar.frame.maxY
+        let relyPoint = CGPoint(x: 30, y: yPosition - 5.0)
+        
+        let popupMenu = YBPopupMenu.show(at: relyPoint, titles: optionNames, icons: optionIconNames, menuWidth: 132, delegate: self)
+        popupMenu!.isShadowShowing = true
     }
     
 }
@@ -230,5 +238,16 @@ extension NotesViewController {
         UIView.animate(withDuration: duration, animations: {
             self.noteInputView.frame.origin = CGPoint(x: 0, y: self.view.frame.height)
         }, completion: nil)
+    }
+}
+
+extension NotesViewController: YBPopupMenuDelegate {
+    func ybPopupMenuDidSelected(at index: Int, ybPopupMenu: YBPopupMenu!) {
+        if index == 0 {
+            self.performSegue(withIdentifier: "ToStatistics", sender: self)
+        }
+        else {
+            self.performSegue(withIdentifier: "ToHistoryNotes", sender: self)
+        }
     }
 }
