@@ -212,7 +212,9 @@ class DatabaseManager {
                     notes.append(note)
                 }
                 
-                historyNotes.append(notes)
+                if notes.count > 0 {
+                    historyNotes.append(notes)
+                }
             }
             catch {
                 print(error)

@@ -19,7 +19,7 @@ class HistoryNotesLayout: UICollectionViewLayout {
     let numberOfColumns = 2
     let cellPadding: CGFloat = 6.0
     
-    private var cache = [UICollectionViewLayoutAttributes]()
+    private var attributesCache = [[UICollectionViewLayoutAttributes]]()
     
     private var contentHeight: CGFloat = 0.0
     private var contentWidth: CGFloat {
@@ -31,7 +31,7 @@ class HistoryNotesLayout: UICollectionViewLayout {
     
     override func prepare() {
         
-        if cache.isEmpty {
+        if attributesCache.isEmpty {
             let columnWidth = contentWidth / CGFloat(numberOfColumns)
             var xOffset = [CGFloat]()
             for column in 0..<numberOfColumns {
@@ -43,6 +43,17 @@ class HistoryNotesLayout: UICollectionViewLayout {
             
             let numberOfSections = collectionView!.numberOfSections
             for section in 0..<numberOfSections {
+                
+                var cache = [UICollectionViewLayoutAttributes]()
+                
+                let headerAttributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: IndexPath(item: 0, section: section))
+                headerAttributes.frame = CGRect(x: 0, y: yOffset[0], width: collectionView!.bounds.width, height: 30.0)
+                cache.append(headerAttributes)
+                
+                yOffset = yOffset.map({ (offset: CGFloat) -> CGFloat in
+                    return offset + 30.0
+                })
+                
                 for item in 0..<collectionView!.numberOfItems(inSection: section) {
                     
                     let indexPath = IndexPath(item: item, section: section)
@@ -68,8 +79,10 @@ class HistoryNotesLayout: UICollectionViewLayout {
                 
                 let maxYOffset = yOffset.max()!
                 for column in 0..<numberOfColumns {
-                    yOffset[column] = maxYOffset
+                    yOffset[column] = maxYOffset + 10.0
                 }
+                
+                attributesCache.append(cache)
             }
         }
     }
@@ -81,13 +94,28 @@ class HistoryNotesLayout: UICollectionViewLayout {
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
         var layoutAttributes = [UICollectionViewLayoutAttributes]()
-        for attributes in cache {
-            
-            if attributes.frame.intersects(rect) {
-                layoutAttributes.append(attributes)
+        for cache in attributesCache {
+            for attributes in cache {
+                
+                if attributes.frame.intersects(rect) {
+                    layoutAttributes.append(attributes)
+                }
             }
         }
         
         return layoutAttributes
+    }
+    
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        
+        return attributesCache[indexPath.section][indexPath.item + 1]
+    }
+    
+    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        return attributesCache[indexPath.section][indexPath.item]
+    }
+    
+    override func invalidateLayout() {
+        attributesCache.removeAll()
     }
 }

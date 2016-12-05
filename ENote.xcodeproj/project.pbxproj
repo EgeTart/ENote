@@ -27,6 +27,8 @@
 		F6C0A39C1DEC4A7B0087B2BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6C0A39A1DEC4A7B0087B2BA /* Main.storyboard */; };
 		F6C0A39E1DEC4A7B0087B2BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6C0A39D1DEC4A7B0087B2BA /* Assets.xcassets */; };
 		F6C0A3A11DEC4A7B0087B2BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6C0A39F1DEC4A7B0087B2BA /* LaunchScreen.storyboard */; };
+		F6F049501DF523A400EABEF0 /* NotesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F0494E1DF523A400EABEF0 /* NotesHeaderView.swift */; };
+		F6F049511DF523A400EABEF0 /* NotesHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6F0494F1DF523A400EABEF0 /* NotesHeaderView.xib */; };
 		F6FFDDCB1DF11FD200E5B733 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FFDDC91DF11FD200E5B733 /* NoteCell.swift */; };
 		F6FFDDCC1DF11FD200E5B733 /* NoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6FFDDCA1DF11FD200E5B733 /* NoteCell.xib */; };
 /* End PBXBuildFile section */
@@ -58,6 +60,8 @@
 		F6C0A39D1DEC4A7B0087B2BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F6C0A3A01DEC4A7B0087B2BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F6C0A3A21DEC4A7B0087B2BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F6F0494E1DF523A400EABEF0 /* NotesHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesHeaderView.swift; sourceTree = "<group>"; };
+		F6F0494F1DF523A400EABEF0 /* NotesHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotesHeaderView.xib; sourceTree = "<group>"; };
 		F6FFDDC91DF11FD200E5B733 /* NoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		F6FFDDCA1DF11FD200E5B733 /* NoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +112,7 @@
 				F6FFDDC91DF11FD200E5B733 /* NoteCell.swift */,
 				F631B3041DF4456000D98609 /* HistoryNoteCell.swift */,
 				F631B3081DF481FB00D98609 /* HistoryNotesLayout.swift */,
+				F6F0494E1DF523A400EABEF0 /* NotesHeaderView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -120,6 +125,7 @@
 				F688570F1DEFC65C00B100EF /* NoteInputView.xib */,
 				F6FFDDCA1DF11FD200E5B733 /* NoteCell.xib */,
 				F631B3051DF4456000D98609 /* HistoryNoteCell.xib */,
+				F6F0494F1DF523A400EABEF0 /* NotesHeaderView.xib */,
 			);
 			name = "Storyboard & Xib";
 			sourceTree = "<group>";
@@ -261,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F631B3071DF4456000D98609 /* HistoryNoteCell.xib in Resources */,
+				F6F049511DF523A400EABEF0 /* NotesHeaderView.xib in Resources */,
 				F6FFDDCC1DF11FD200E5B733 /* NoteCell.xib in Resources */,
 				F6C0A3A11DEC4A7B0087B2BA /* LaunchScreen.storyboard in Resources */,
 				F6C0A39E1DEC4A7B0087B2BA /* Assets.xcassets in Resources */,
@@ -337,6 +344,7 @@
 				F6BF7C441DF19C80005082FE /* Helper.swift in Sources */,
 				F6BD40261DF0362D005A69E3 /* Note.swift in Sources */,
 				F631B3061DF4456000D98609 /* HistoryNoteCell.swift in Sources */,
+				F6F049501DF523A400EABEF0 /* NotesHeaderView.swift in Sources */,
 				F6FFDDCB1DF11FD200E5B733 /* NoteCell.swift in Sources */,
 				F631B3091DF481FB00D98609 /* HistoryNotesLayout.swift in Sources */,
 			);

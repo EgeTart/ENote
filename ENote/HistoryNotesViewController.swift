@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MJRefresh
 
 class HistoryNotesViewController: UIViewController {
 
@@ -15,6 +16,7 @@ class HistoryNotesViewController: UIViewController {
     let databaseManager = DatabaseManager.sharedManager
     
     var beginDate = Date(timeInterval: -24 * 60 * 60, since: Date())
+    let fiveDaysInSeconds = -24 * 60 * 60 * 5.0
     
     var historyNotes = [[Note]]()
     
@@ -30,6 +32,7 @@ class HistoryNotesViewController: UIViewController {
         })
         
         notesCollectionView.register(UINib(nibName: "HistoryNoteCell", bundle: Bundle.main), forCellWithReuseIdentifier: "HistoryNoteCell")
+        notesCollectionView.register(UINib(nibName: "NotesHeaderView", bundle: Bundle.main), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "NotesHeader")
         
         notesCollectionView.contentInset = UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5)
         
@@ -38,6 +41,50 @@ class HistoryNotesViewController: UIViewController {
         if let layout = notesCollectionView.collectionViewLayout as? HistoryNotesLayout {
             layout.delegate = self
         }
+        
+        //notesCollectionView.mj_footer = MJRefreshFooter.init(refreshingTarget: self, refreshingAction: #selector(HistoryNotesViewController.loadMoreHistoryNotes))
+        
+        let footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(HistoryNotesViewController.loadMoreHistoryNotes))
+        footer?.setTitle("上拉加载更多", for: .pulling)
+        footer?.setTitle("正在加载.....", for: .refreshing)
+        footer?.setTitle("全部加载完毕", for: .noMoreData)
+        
+        notesCollectionView.mj_footer = footer
+    }
+    
+    func loadMoreHistoryNotes() {
+        
+        beginDate = Date(timeInterval: fiveDaysInSeconds, since: beginDate)
+        
+        let originCount = historyNotes.count
+        
+        let notes = databaseManager.queryHistoryNotes(beginDate: beginDate)
+        historyNotes.append(contentsOf: notes)
+        
+        if notes.count == 0 {
+            print("no more notes")
+            notesCollectionView.mj_footer.endRefreshingWithNoMoreData()
+        }
+        
+        let titles = notes.map { (notes: [Note]) -> String in
+            return notes[0].date
+        }
+        sectionTitles.append(contentsOf: titles)
+        
+        notesCollectionView.mj_footer.endRefreshing()
+        
+        print(sectionTitles)
+        print(historyNotes.count)
+        
+        let range = Range<Int>(uncheckedBounds: (lower: originCount, upper: historyNotes.count))
+        let indexSet = IndexSet(integersIn: range)
+        
+        notesCollectionView.insertSections(indexSet)
+        let indexPath = IndexPath(item: 0, section: originCount)
+        
+        notesCollectionView.scrollToItem(at: indexPath, at: .top, animated: true)
+        notesCollectionView.scrollsToTop = true
+        
     }
     
     func heightForContent(content: String, font: UIFont, width: CGFloat) -> CGFloat {
@@ -74,6 +121,16 @@ extension HistoryNotesViewController: UICollectionViewDataSource {
         }
         
         return historyNoteCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        let sectionTitle = sectionTitles[indexPath.section]
+        
+        let notesHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "NotesHeader", for: indexPath) as! NotesHeaderView
+        notesHeaderView.dateLabel.text = sectionTitle
+        
+        return notesHeaderView
     }
 }
 
