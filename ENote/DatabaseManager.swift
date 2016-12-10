@@ -24,9 +24,8 @@ class DatabaseManager {
     private func createTables() {
         
         // 获取数据库文件所在路径
-        let documentDirectory = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0]
-        let documentPath = URL(fileURLWithPath: documentDirectory, isDirectory: true, relativeTo: nil)
-        let databasePath = documentPath.appendingPathComponent("notes.sqlite3").absoluteString
+        let documentDirectoryURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        let databasePath = documentDirectoryURL.appendingPathComponent("notes.sqlite3").path
         
         print(databasePath)
         database = FMDatabase(path: databasePath)
