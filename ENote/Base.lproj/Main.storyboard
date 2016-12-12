@@ -19,12 +19,38 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OtM-fR-jue">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="J1Y-Yj-NfU">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IRY-qr-tfW">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                                        </scrollView>
+                                        <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="5" translatesAutoresizingMaskIntoConstraints="NO" id="oiU-UP-t5q">
+                                            <rect key="frame" x="0.0" y="123" width="375" height="37"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <color key="pageIndicatorTintColor" red="0.86274509803921573" green="0.86274509803921573" blue="0.86274509803921573" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="currentPageIndicatorTintColor" red="0.40377155170000001" green="0.76452047410000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </pageControl>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="oiU-UP-t5q" secondAttribute="trailing" id="7eg-OS-4Gk"/>
+                                        <constraint firstAttribute="trailing" secondItem="IRY-qr-tfW" secondAttribute="trailing" id="F6h-sN-PAx"/>
+                                        <constraint firstItem="oiU-UP-t5q" firstAttribute="leading" secondItem="J1Y-Yj-NfU" secondAttribute="leading" id="J1B-bF-QAP"/>
+                                        <constraint firstItem="IRY-qr-tfW" firstAttribute="leading" secondItem="J1Y-Yj-NfU" secondAttribute="leading" id="fG8-cs-KuR"/>
+                                        <constraint firstAttribute="bottom" secondItem="IRY-qr-tfW" secondAttribute="bottom" id="n3J-5f-nT2"/>
+                                        <constraint firstAttribute="bottom" secondItem="oiU-UP-t5q" secondAttribute="bottom" id="vPr-KJ-3Q4"/>
+                                        <constraint firstItem="IRY-qr-tfW" firstAttribute="top" secondItem="J1Y-Yj-NfU" secondAttribute="top" id="xnZ-AM-sAF"/>
+                                    </constraints>
+                                </view>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -49,16 +75,19 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="addNoteItem" destination="6sc-0c-dwR" id="5DX-Au-MtL"/>
                         <outlet property="notesTableView" destination="OtM-fR-jue" id="7RP-jY-8IW"/>
+                        <outlet property="pageControl" destination="oiU-UP-t5q" id="Hqu-5r-2Xi"/>
+                        <outlet property="sentenceScrollView" destination="IRY-qr-tfW" id="Z6F-YR-M4h"/>
                         <segue destination="2f2-Qs-Jxa" kind="show" identifier="ToStatistics" id="woC-PR-JpG"/>
                         <segue destination="HY5-h7-bP2" kind="show" identifier="ToHistoryNotes" id="G0W-m2-Lil"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="737" y="88"/>
+            <point key="canvasLocation" x="736.79999999999995" y="87.706146926536732"/>
         </scene>
         <!--历史便签-->
         <scene sceneID="g4q-wa-KXp">
@@ -69,11 +98,11 @@
                         <viewControllerLayoutGuide type="bottom" id="BBv-S6-Q9G"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="65u-aU-0fE">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hHA-Ny-ZJG">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewLayout key="collectionViewLayout" id="wX9-i8-Fdc" customClass="HistoryNotesLayout" customModule="ENote" customModuleProvider="target"/>
                                 <cells/>
@@ -118,15 +147,15 @@
                         <viewControllerLayoutGuide type="bottom" id="Ijk-bs-l4G"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ENX-Gx-9WV">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0eh-f2-nl6" customClass="CombinedChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="150" width="375" height="507"/>
+                                <rect key="frame" x="0.0" y="86" width="375" height="507"/>
                                 <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V3T-rF-xBd">
-                                <rect key="frame" x="8" y="447" width="359" height="200"/>
+                                <rect key="frame" x="8" y="383" width="359" height="200"/>
                                 <subviews>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="S67-El-WFs">
                                         <rect key="frame" x="0.0" y="0.0" width="359" height="160"/>
@@ -180,7 +209,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="G1L-1A-ZlR">
-                                <rect key="frame" x="16" y="72" width="343" height="29"/>
+                                <rect key="frame" x="16" y="8" width="343" height="29"/>
                                 <segments>
                                     <segment title="按天显示"/>
                                     <segment title="按周显示"/>
@@ -191,7 +220,7 @@
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D2q-VZ-KcD">
-                                <rect key="frame" x="207.5" y="108" width="151.5" height="34"/>
+                                <rect key="frame" x="207.5" y="44" width="151.5" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="2016-10-11"/>
                                 <connections>
@@ -199,7 +228,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ztn-pp-fKo">
-                                <rect key="frame" x="16" y="108" width="151.5" height="34"/>
+                                <rect key="frame" x="16" y="44" width="151.5" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="2016-10-11"/>
                                 <connections>
@@ -207,7 +236,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="至" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iBo-2t-2dD">
-                                <rect key="frame" x="179" y="115" width="17" height="20"/>
+                                <rect key="frame" x="179" y="51" width="17" height="20"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>

@@ -29,6 +29,8 @@
 		F6C0A3A11DEC4A7B0087B2BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6C0A39F1DEC4A7B0087B2BA /* LaunchScreen.storyboard */; };
 		F6F049501DF523A400EABEF0 /* NotesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F0494E1DF523A400EABEF0 /* NotesHeaderView.swift */; };
 		F6F049511DF523A400EABEF0 /* NotesHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6F0494F1DF523A400EABEF0 /* NotesHeaderView.xib */; };
+		F6FDDA251DFE3CC1002B079F /* DailySentenceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6FDDA241DFE3CC1002B079F /* DailySentenceView.xib */; };
+		F6FDDA271DFE3CDD002B079F /* DailySentenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FDDA261DFE3CDD002B079F /* DailySentenceView.swift */; };
 		F6FFDDCB1DF11FD200E5B733 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6FFDDC91DF11FD200E5B733 /* NoteCell.swift */; };
 		F6FFDDCC1DF11FD200E5B733 /* NoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6FFDDCA1DF11FD200E5B733 /* NoteCell.xib */; };
 /* End PBXBuildFile section */
@@ -62,6 +64,8 @@
 		F6C0A3A21DEC4A7B0087B2BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6F0494E1DF523A400EABEF0 /* NotesHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesHeaderView.swift; sourceTree = "<group>"; };
 		F6F0494F1DF523A400EABEF0 /* NotesHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotesHeaderView.xib; sourceTree = "<group>"; };
+		F6FDDA241DFE3CC1002B079F /* DailySentenceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DailySentenceView.xib; sourceTree = "<group>"; };
+		F6FDDA261DFE3CDD002B079F /* DailySentenceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailySentenceView.swift; sourceTree = "<group>"; };
 		F6FFDDC91DF11FD200E5B733 /* NoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		F6FFDDCA1DF11FD200E5B733 /* NoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,6 +117,7 @@
 				F631B3041DF4456000D98609 /* HistoryNoteCell.swift */,
 				F631B3081DF481FB00D98609 /* HistoryNotesLayout.swift */,
 				F6F0494E1DF523A400EABEF0 /* NotesHeaderView.swift */,
+				F6FDDA261DFE3CDD002B079F /* DailySentenceView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -126,6 +131,7 @@
 				F6FFDDCA1DF11FD200E5B733 /* NoteCell.xib */,
 				F631B3051DF4456000D98609 /* HistoryNoteCell.xib */,
 				F6F0494F1DF523A400EABEF0 /* NotesHeaderView.xib */,
+				F6FDDA241DFE3CC1002B079F /* DailySentenceView.xib */,
 			);
 			name = "Storyboard & Xib";
 			sourceTree = "<group>";
@@ -267,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F631B3071DF4456000D98609 /* HistoryNoteCell.xib in Resources */,
+				F6FDDA251DFE3CC1002B079F /* DailySentenceView.xib in Resources */,
 				F6F049511DF523A400EABEF0 /* NotesHeaderView.xib in Resources */,
 				F6FFDDCC1DF11FD200E5B733 /* NoteCell.xib in Resources */,
 				F6C0A3A11DEC4A7B0087B2BA /* LaunchScreen.storyboard in Resources */,
@@ -337,6 +344,7 @@
 				F691C1321DEC560300EAFEE8 /* Sentence.swift in Sources */,
 				F6BD40241DF01187005A69E3 /* DatabaseManager.swift in Sources */,
 				F6BD40281DF03644005A69E3 /* NotesManager.swift in Sources */,
+				F6FDDA271DFE3CDD002B079F /* DailySentenceView.swift in Sources */,
 				F6BF7C461DF1A9BB005082FE /* NotesStatistics.swift in Sources */,
 				F6C0A3971DEC4A7B0087B2BA /* AppDelegate.swift in Sources */,
 				F688570A1DEFC5C000B100EF /* NoteInputView.swift in Sources */,

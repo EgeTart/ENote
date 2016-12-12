@@ -11,15 +11,14 @@ import Alamofire
 import SDWebImage
 
 class NotesViewController: UIViewController {
-
-    @IBOutlet weak var sentenceContainerView: UIView!
-    @IBOutlet weak var sentenceImageView: UIImageView!
-    @IBOutlet weak var sentenceLabel: UILabel!
     
     @IBOutlet weak var addNoteItem: UIBarButtonItem!
     @IBOutlet weak var notesTableView: UITableView!
     
-    var sentence: Sentence!
+    @IBOutlet weak var sentenceScrollView: UIScrollView!
+    
+    @IBOutlet weak var pageControl: UIPageControl!
+    var sentences = [Sentence]()
     
     var noteInputView: NoteInputView!
     
@@ -28,6 +27,12 @@ class NotesViewController: UIViewController {
     
     let optionNames = ["数据统计", "历史便签"]
     let optionIconNames = ["statistics_icon", "history_icon"]
+    
+    let width = UIScreen.main.bounds.width
+    
+    let sentenceCount = 5
+    
+    var timer: Timer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +48,21 @@ class NotesViewController: UIViewController {
         
         notesTableView.register(UINib(nibName: "NoteCell", bundle: Bundle.main), forCellReuseIdentifier: "NoteCell")
         
+        for subView in notesTableView.subviews {
+            if subView.isKind(of: UIScrollView.self) {
+                (subView as! UIScrollView).delegate = nil
+            }
+        }
+        
+        pageControl.numberOfPages = sentenceCount
+        
         //databaseManager.deleteAllHistoryData()
 //        let dispatchQueue = DispatchQueue.global(qos: .default)
 //        dispatchQueue.async { 
 //            self.databaseManager.fillMockData()
 //        }
+        
+        getDailySentence(isLastDay: 1 == sentenceCount, count: 1)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,6 +70,7 @@ class NotesViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(NotesViewController.keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(NotesViewController.keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -62,54 +78,131 @@ class NotesViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self)
     }
-    
-    func currentDateInFormatte(formatte: String) -> String {
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = formatte
-        
-        let dateInFormatte = dateFormatter.string(from: date)
-        
-        return dateInFormatte
-    }
 
+    // MARK: - 获取每日一句功能的代码段
     func getDailySentence() {
         
-        self.navigationController?.navigationBar.isHidden = true
+//        let operationQueue = OperationQueue()
+//        var operations = [BlockOperation]()
+//        
+//        for i in 0..<sentenceCount {
+//            
+//            let operation = BlockOperation {
+//                let date = dateInFormatte(date: Date(timeInterval: -24 * 60 * 60 * Double(i), since: Date()), formatte: "yyyy-MM-dd")
+//                
+//                self.getDailySentence(date: date, isLastDay: i == self.sentenceCount - 1)
+//            }
+//            
+//            let blockOperation = BlockOperation(block: { 
+//                <#code#>
+//            })
+//            
+//            if i > 0 {
+//                print(i)
+//                operation.addDependency(operations[i - 1])
+//            }
+//            operations.append(operation)
+//        }
+//        
+//        operationQueue.addOperations(operations, waitUntilFinished: false)
         
-        let currentDate = currentDateInFormatte(formatte: "yyyy-MM-dd")
+        self.getDailySentence(isLastDay: 1 == sentenceCount, count: 1)
+    }
+    
+    func getDailySentence(isLastDay: Bool, count: Int) {
         
-        Alamofire.request("http://open.iciba.com/dsapi/", method: .get, parameters: ["date": currentDate], encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
+        let date = dateInFormatte(date: Date(timeInterval: -24 * 60 * 60 * Double(count - 1), since: Date()), formatte: "yyyy-MM-dd")
+        
+        Alamofire.request("http://open.iciba.com/dsapi/", method: .get, parameters: ["date": date], encoding: URLEncoding.default, headers: nil).responseJSON { (response) in
             
             if let result = response.result.value as? Dictionary<String, Any> {
-                self.sentence = Sentence(dict: result)
-                self.sentenceLabel.text = self.sentence.englishSentence
+                let sentence = Sentence(dict: result)
+                self.sentences.append(sentence)
                 
-                self.sentenceImageView.sd_setImageTmp(with: URL(string: self.sentence.pictureURL!)!, placeholderImage: UIImage(named: "saffron"), completed: { (_, _, _, _) in
-                    self.dismissSentenceContainerView()
-                })
+                if isLastDay {
+                    DispatchQueue.main.async {
+                        self.setupSentenceScrollView()
+                    }
+                }
+                else {
+                    self.getDailySentence(isLastDay: count + 1 == self.sentenceCount, count: count + 1)
+                }
             }
-            else {
-                self.sentenceImageView.image = UIImage(named: "saffron")
-                self.dismissSentenceContainerView()
-            }
+        }
+        
+    }
+    
+    func setupSentenceScrollView() {
+        
+        let height = width / 2.0
+        
+        notesTableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: width, height: height)
+        
+        sentenceScrollView.delegate = self
+        sentenceScrollView.contentSize = CGSize(width: width * CGFloat(sentences.count + 2), height: height)
+        
+        sentences.insert(sentences[sentenceCount - 1], at: 0)
+        sentences.append(sentences[1])
+        
+        for (index, sentence) in sentences.enumerated() {
+            print(sentence.pictureURL!)
+            let offset = width * CGFloat(index)
+        
+            let dailySentenceView = Bundle.main.loadNibNamed("DailySentenceView", owner: nil, options: nil)?.first as! DailySentenceView
+            
+            dailySentenceView.frame.origin = CGPoint(x: offset, y: 0)
+            dailySentenceView.sentenceImageView.sd_setImage(with: URL(string: sentence.pictureURL!)!)
+            dailySentenceView.sentenceLabel.text = sentence.englishSentence
+            
+            sentenceScrollView.addSubview(dailySentenceView)
+            
+        }
+        
+        sentenceScrollView.contentOffset = CGPoint(x: width, y: 0)
+        
+        fireTimer()
+    }
+    
+    func nextSentence() {
+        
+        let currentPage = pageControl.currentPage + 1
+        
+        sentenceScrollView.setContentOffset(CGPoint(x: width * CGFloat(currentPage + 1), y: 0), animated: true)
+        
+    }
+    
+    func updateCurrentPage(scrollView: UIScrollView) {
+        var currentPage = Int(scrollView.contentOffset.x / self.view.frame.width) - 1
+        
+        if currentPage == -1 {
+            currentPage = sentenceCount - 1
+        }
+        else if currentPage == sentenceCount {
+            currentPage = 0
+        }
+        
+        pageControl.currentPage = currentPage
+    }
+    
+    func checkBounds(scrollView: UIScrollView) {
+        
+        if scrollView.contentOffset.x == 0.0 {
+            scrollView.setContentOffset(CGPoint(x: width * CGFloat(sentenceCount), y: 0), animated: false)
+        }
+        else if scrollView.contentOffset.x == (width * CGFloat(sentenceCount + 1)) {
+            scrollView.setContentOffset(CGPoint(x: width, y: 0), animated: false)
         }
     }
     
-    func dismissSentenceContainerView() {
+    func fireTimer() {
+        timer = Timer.init(timeInterval: 5.0, target: self, selector: #selector(NotesViewController.nextSentence), userInfo: nil, repeats: true)
         
-        UIView.animate(withDuration: 2.0, delay: 2.0, options: [], animations: {
-            self.sentenceImageView.frame.size.width = self.view.frame.width * 1.5
-            self.sentenceImageView.frame.size.height = self.view.frame.height * 1.5
-            self.sentenceImageView.center = self.sentenceContainerView.center
-            self.sentenceContainerView.alpha = 0
-
-        }, completion: {_ in
-            self.sentenceContainerView.removeFromSuperview()
-            self.navigationController?.navigationBar.isHidden = false
-        })
+        let runLoop = RunLoop.main
+        runLoop.add(timer, forMode: .commonModes)
     }
+    // MARK: - －－－－－－－－－－－－－
     
+    // 添加一条便签之后的回调方法
     func finishedAddNoteHandler(note: String) {
         print(note)
         
@@ -251,6 +344,7 @@ extension NotesViewController {
     }
 }
 
+// MARK: - YBPopupMenuDelegate
 extension NotesViewController: YBPopupMenuDelegate {
     func ybPopupMenuDidSelected(at index: Int, ybPopupMenu: YBPopupMenu!) {
         if index == 0 {
@@ -260,4 +354,44 @@ extension NotesViewController: YBPopupMenuDelegate {
             self.performSegue(withIdentifier: "ToHistoryNotes", sender: self)
         }
     }
+}
+
+
+// MARK: - UIScrollViewDelegate
+extension NotesViewController: UIScrollViewDelegate {
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        
+        if scrollView == sentenceScrollView {
+            timer.invalidate()
+            timer = nil
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        
+        if scrollView == sentenceScrollView {
+            fireTimer()
+        }
+
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+        if scrollView === sentenceScrollView {
+            updateCurrentPage(scrollView: scrollView)
+            
+            checkBounds(scrollView: scrollView)
+        }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        
+        if scrollView === sentenceScrollView {
+            updateCurrentPage(scrollView: scrollView)
+            
+            checkBounds(scrollView: scrollView)
+        }
+    }
+    
 }
